@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('krisha i love you');
+
 
 class Workout {
   date = new Date();
