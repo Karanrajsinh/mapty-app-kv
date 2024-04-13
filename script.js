@@ -415,7 +415,7 @@ class App {
               <div class="btn-group dropend">
                   <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img class="edit-icon" src="/ellipsis-vertical-solid.svg" alt="">
+                      <img class="edit-icon" src="./option-icon.png" alt="">
                   </button>
                   <ul class="dropdown-menu">
                       <li><a class="dropdown-item edit-workout" data-id="${workout.id}"href="#">Edit<i class="fa-solid fa-pencil" style="color: #f7f7f7;"></i></a></li>
