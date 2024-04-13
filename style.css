@@ -20,6 +20,17 @@ html {
   box-sizing: border-box;
 }
 
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Manrope', sans-serif;
   color: var(--color-light--2);
@@ -27,10 +38,11 @@ body {
   line-height: 1.6;
   height: 100vh;
   overscroll-behavior-y: none;
-  padding: 2.5em;
+  padding: 2em;
   background: linear-gradient(to bottom right, #42484d, #00c46a, #2d3439);
 
   display: flex;
+  flex-direction: row;
 }
 
 /* .modal {
@@ -77,10 +89,20 @@ body {
   max-width: 70rem;
   background-color: #3c3f41;
   padding: 5rem 6rem;
-  box-shadow: 0 3.5rem 6rem rgb(0, 0, 0, 0.6);
+  border-radius: 1rem;
+  box-shadow: 0 3.5rem 6rem rgba(0, 0, 0, 0.6);
   z-index: 1000;
-  transition: all 0.5s;
-  /* Add this to make the button position relative to the modal */
+  opacity: 0; /* Start with 0 opacity */
+  animation: fadeIn 0.5s ease-in-out forwards; /* Apply the fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modal h3 {
@@ -95,15 +117,19 @@ body {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 4rem; /* Adjust the font size as needed */
+  font-size: 4rem;
+  /* Adjust the font size as needed */
   cursor: pointer;
   border: none;
   background: none;
-  display: flex; /* Align the symbol both horizontally and vertically */
+  display: flex;
+  /* Align the symbol both horizontally and vertically */
   align-items: center;
   justify-content: center;
-  width: 2.5rem; /* Adjust the width to make it look like a square */
-  height: 2.5rem; /* Adjust the height to make it look like a square */
+  width: 2.5rem;
+  /* Adjust the width to make it look like a square */
+  height: 2.5rem;
+  /* Adjust the height to make it look like a square */
 }
 
 .btn--close-modal:hover {
@@ -115,6 +141,7 @@ body {
 .hidden {
   display: none;
 }
+
 /* GENERAL */
 a:link,
 a:visited {
@@ -123,33 +150,43 @@ a:visited {
 
 /* SIDEBAR */
 .sidebar {
-  flex-basis: 50rem;
+  flex-basis: 56.75rem;
   background-color: var(--color-dark--1);
   padding: 3rem 5rem 4rem 5rem;
   display: flex;
   flex-direction: column;
   border-top-left-radius: 1em;
   border-bottom-left-radius: 1em;
+  box-shadow: 0 1.5rem 10rem rgba(14, 14, 14, 0.8);
 }
+
 #map {
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
   box-shadow: 10rem 1.5rem 10rem rgba(0, 0, 0, 0.4);
+  flex: 1;
+  height: 100%;
+  background-color: var(--color-light--1);
 }
-.sidebar {
-  box-shadow: 0 1.5rem 10rem rgba(14, 14, 14, 0.8);
-}
+
 .logo {
   height: 5.2rem;
   align-self: center;
   margin-bottom: 4rem;
 }
+
 .handle-workout {
   display: flex;
-  /* justify-content: space-evenly; */
+  justify-content: space-between;
 }
+
 .handle-workout--sort {
+  width: 18em;
   margin-right: 5em;
+}
+
+.handle-workout--type {
+  width: 13em;
 }
 
 .workouts {
@@ -157,6 +194,7 @@ a:visited {
   height: 77vh;
   overflow-y: scroll;
 }
+
 .workouts::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
@@ -173,39 +211,185 @@ a:visited {
   border-radius: 10vw;
 }
 
-.workout {
-  background-color: var(--color-dark--2);
-  border-radius: 5px;
-  padding: 1.5rem 2.25rem;
-  margin-bottom: 1.75rem;
-  cursor: pointer;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 0.75rem 1.5rem;
-}
 .workout--running {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .workout--cycling {
   border-left: 5px solid var(--color-brand--1);
 }
 
+/* .workout {
+            background-color: var(--color-dark--2);
+            border-radius: 5px;
+            padding: 1.5rem 2.25rem;
+            margin-bottom: 1.75rem;
+            cursor: pointer;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.75rem 1.5rem;
+        }
+
+        .workout--running {
+            border-left: 5px solid var(--color-brand--2);
+        }
+
+        .workout--cycling {
+            border-left: 5px solid var(--color-brand--1);
+        }
+
+        .workout__title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            grid-column: 1 / -1;
+        }
+
+        .workout__details {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .workout__icon {
+            font-size: 1.8rem;
+            margin-right: 0.2rem;
+            height: 0.28rem;
+        }
+
+        .workout__value {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .workout__unit {
+            font-size: 1.1rem;
+            color: var(--color-light--1);
+            text-transform: uppercase;
+            font-weight: 800;
+        } */
+
+/* .workout {
+            background-color: var(--color-dark--2);
+            border-radius: 5px;
+            padding: 1.5rem 2.25rem;
+            margin-bottom: 1.75rem;
+            cursor: pointer;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.75rem 1.5rem;
+        } */
+.workout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  cursor: pointer;
+  margin-bottom: 1.75rem;
+  /* First column auto, second column 1fr */
+  gap: 0.75rem 1.75rem;
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 1.25rem 2.25rem;
+}
+
 .workout__title {
+  grid-column: 1/ -1;
   font-size: 1.7rem;
   font-weight: 600;
-  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  font-size: 20px;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-group {
+  position: relative;
+}
+.dropdown-menu {
+  font-size: 1.4rem;
+  padding: 0.5em;
+  border: none;
+  line-height: 1.5;
+  font-weight: bolder;
+  box-shadow: 0 0.1em 1.6em 0 rgba(107, 105, 105, 0.5);
+  background-color: var(--color-dark--1);
+  border-radius: 1.3em;
+}
+
+.dropdown-menu li a {
+  color: white;
+}
+
+.dropdown-menu li a:hover {
+  background-color: rgb(163, 163, 163, 0.5);
+  color: var(--color-light--2);
+  border-radius: 10px;
+}
+
+.edit-icon {
+  margin: 0;
+  width: 24px;
+  height: 2.8rem;
+  padding: 0.5rem;
+  border-radius: 0.5em;
+}
+
+.fa-trash {
+  margin-left: 1rem;
+}
+
+.edit-icon:hover {
+  background-color: var(--color-dark--1);
+  color: #2d3439;
+}
+
+.edit-workout {
+  margin-bottom: 0.45em;
+}
+
+.edit-workout,
+.delete-workout {
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: space-evenly;
+  /* padding: 1rem 2.5rem; */
 }
 
 .workout__details {
   display: flex;
+  justify-content: flex-start;
   align-items: baseline;
+}
+
+.workout__details:last-child {
+  margin-left: auto;
 }
 
 .workout__icon {
   font-size: 1.8rem;
   margin-right: 0.2rem;
   height: 0.28rem;
+}
+
+.workout--cycling .workout__details .workout__value {
+  margin-left: 0.2rem;
 }
 
 .workout__value {
@@ -215,26 +399,65 @@ a:visited {
 
 .workout__unit {
   font-size: 1.1rem;
-  color: var(--color-light--1);
+  color: var(--color-light--2);
   text-transform: uppercase;
   font-weight: 800;
 }
+.form .form__title {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  grid-column: 1;
+  grid-row: span 1/2;
+}
+.form .form__btn-close {
+  background-color: transparent;
+  border: none;
+  border-radius: 0.4em;
+  font-size: 2.5rem;
+  width: 25px;
+}
+.form__btn-close:hover {
+  background-color: #2d3439;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(190, 185, 185, 0.2);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+}
 
 .form {
-  background-color: var(--color-dark--2);
   border-radius: 5px;
   padding: 1.5rem 2.75rem;
   margin-bottom: 1.75rem;
-
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
   gap: 0.5rem 2.5rem;
-
+  background-color: var(--color-dark--2);
   /* Match height and activity boxes */
-  height: 9.25rem;
+  height: 15rem;
   transition: all 0.5s, transform 1ms;
 }
 
+.form__row:nth-child(-n + 1) {
+  grid-column: span 2; /* Span 2 columns for the first three items */
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 3px solid #00c46a;
+  margin-bottom: 1em;
+}
+
+.form__title {
+  font-size: 1.9rem;
+  font-weight: bold;
+  margin-left: 8em;
+}
 .form.hidden {
   transform: translateY(-30rem);
   height: 0;
@@ -271,17 +494,51 @@ a:visited {
   font-weight: 900;
   transition: all 0.2s;
 }
+
+.handle-button {
+  display: flex;
+  gap: 5.5rem;
+  justify-content: flex-end;
+  margin-top: 2.5rem;
+}
+
 .handle-workout .form__input {
   background-color: var(--color-dark--2);
   box-shadow: 0.25rem 0.75rem 3rem rgba(10, 10, 10, 0.4);
 }
+
 .handle-workout .form__input--value {
   background-color: var(--color-dark--2);
 }
+
 .form__input:focus {
   outline: none;
 }
 
+.form__btn-modal:hover {
+  opacity: 0.8;
+}
+
+.form__btn-modal span {
+  margin-right: 1rem;
+}
+.form__btn-modal {
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+  margin-right: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5em;
+}
+.btn__change {
+  background-color: #00c46a;
+}
+
+.btn__cancel {
+  background-color: rgb(221, 32, 32);
+}
 .delete-all {
   background-color: transparent;
   background-repeat: no-repeat;
@@ -291,16 +548,20 @@ a:visited {
   outline: none;
   font-size: 20px;
 }
+
 .fa-trash-can {
   color: #8b8b8b;
 }
+
 .fa-trash-can:hover {
   color: #adadad;
 }
+
 .form__input--value {
   background-color: #8b8b8b;
   font-weight: 900;
 }
+
 .form__btn {
   display: none;
 }
@@ -324,11 +585,6 @@ a:visited {
 }
 
 /* MAP */
-#map {
-  flex: 1;
-  height: 100%;
-  background-color: var(--color-light--1);
-}
 
 /* Popup width is defined in JS using options */
 .leaflet-popup .leaflet-popup-content-wrapper {
@@ -349,6 +605,61 @@ a:visited {
 .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+}
+
+@media only screen and (max-width: 748px) {
+  /* Styles to apply when the screen width is 768 pixels or less */
+  body {
+    flex-direction: column;
+    padding: 1.5em;
+  }
+
+  .sidebar {
+    min-height: 50%;
+    min-width: 100%;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 0em;
+    border-top-right-radius: 1em;
+  }
+
+  .workouts {
+    height: 50vh;
+  }
+  #map {
+    min-height: 25%;
+    border-radius: 0;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+  }
+
+  .leaflet-popup .leaflet-popup-content-wrapper {
+    background-color: var(--color-dark--1);
+    color: var(--color-light--2);
+    border-radius: 5px;
+    padding-right: 0.1em;
+  }
+
+  .leaflet-popup .leaflet-popup-content {
+    font-size: 1.3rem;
+  }
+
+  .leaflet-popup .leaflet-popup-tip,
+  .running-popup .leaflet-popup-content-wrapper,
+  .cycling-popup .leaflet-popup-content-wrapper {
+    border-left: 3px solid var(--color-brand--2);
+  }
+}
+@media only screen and (max-width: 588px) {
+  body {
+    padding: 0.5em;
+  }
+  .sidebar {
+    padding: 3em 1.5em;
+  }
+  .workout {
+    margin-bottom: 1em;
+  }
 }
