@@ -95,6 +95,11 @@ const modal = document.querySelector('.modal');
 const errorContent = document.querySelector('.error-content');
 const closeModal = document.querySelector('.btn--close-modal');
 const overlay = document.querySelector('.overlay');
+const tempImg = document.querySelector(".tempImg");
+
+// to get the bundeled image reference after build to show "more-option" icon 
+const src = tempImg.src;
+tempImg.remove();
 
 //edit form 
 const editForm = document.querySelector('.edit-form');
@@ -415,7 +420,7 @@ class App {
               <div class="btn-group dropend">
                   <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img class="edit-icon" src="./option-icon.png" alt="">
+                      <img class="edit-icon" src="${src}" alt="">
                   </button>
                   <ul class="dropdown-menu">
                       <li><a class="dropdown-item edit-workout" data-id="${workout.id}"href="#">Edit<i class="fa-solid fa-pencil" style="color: #f7f7f7;"></i></a></li>
