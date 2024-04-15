@@ -102,12 +102,14 @@ const src = tempImg.src;
 tempImg.remove();
 
 //edit form 
+
 const editForm = document.querySelector('.edit-form');
 const editInputType = document.querySelector('.edit-form__input--type');
 const editInputDistance = document.querySelector('.edit-form__input--distance');
 const editInputDuration = document.querySelector('.edit-form__input--duration');
 const editInputCadence = document.querySelector('.edit-form__input--cadence');
 const editInputElevation = document.querySelector('.edit-form__input--elevation');
+
 ///
 let workoutEdit;
 let workoutDelete;
@@ -118,6 +120,7 @@ let selectedID;
 let html;
 let reRender = false;
 let formIsOpen = false;
+
 ///////////////////////////
 
 const locationErrorContent = `
@@ -130,7 +133,6 @@ const inputErrorContent = `
 <h3>⚠️INPUT ERROR!⚠️</h3>
 <br>
 <h4>Given Input Is Not Readable Try To Input Only Numbers And Positive Aspect The Elevation</h4>`;
-
 const formErrorContent = `
 <h3>⛔CONCURRENT ACCESS⛔</h3>
 <br>

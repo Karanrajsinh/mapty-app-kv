@@ -645,12 +645,6 @@ a:visited {
   .leaflet-popup .leaflet-popup-content {
     font-size: 1.3rem;
   }
-
-  .leaflet-popup .leaflet-popup-tip,
-  .running-popup .leaflet-popup-content-wrapper,
-  .cycling-popup .leaflet-popup-content-wrapper {
-    border-left: 3px solid var(--color-brand--2);
-  }
 }
 @media only screen and (max-width: 588px) {
   body {
