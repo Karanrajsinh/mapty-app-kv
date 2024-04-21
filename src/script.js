@@ -95,13 +95,16 @@ const errorContent = document.querySelector('.error-content');
 const closeModal = document.querySelector('.btn--close-modal');
 const overlay = document.querySelector('.overlay');
 const tempImg = document.querySelector(".tempImg");
+const tempSpin = document.querySelector('.tempSpin')
 const map = document.getElementById('map')
 
 
 
-// to get the bundeled image reference after build to show "more-option" icon 
-const src = tempImg.src;
+// to get the bundeled image reference after build to show the images
+const srcOptionIcon = tempImg.src;
+const srcSpinner = tempSpin.src;
 tempImg.remove();
+tempSpin.remove();
 
 //edit form 
 
@@ -127,7 +130,7 @@ let formIsOpen = false;
 
 const spinnerMarkup = `
 <div class="spinner">
-<img src="../materials/spinner.png" alt="">
+<img src="${srcSpinner}" alt="">
 </div>`
 
 const noWorkoutContent = `
@@ -455,7 +458,7 @@ class App {
               <div class="btn-group dropend">
                   <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img class="edit-icon" src="${src}" alt="">
+                      <img class="edit-icon" src="${srcOptionIcon}" alt="">
                   </button>
                   <ul class="dropdown-menu">
                       <li><a class="dropdown-item edit-workout" data-id="${workout.id}"href="#">Edit<i class="fa-solid fa-pencil" style="color: #f7f7f7;"></i></a></li>
