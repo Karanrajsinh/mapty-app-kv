@@ -532,13 +532,6 @@ a:visited {
   padding: 0.75rem 1.5rem;
   border-radius: 0.5em;
 }
-.btn__change {
-  background-color: #00c46a;
-}
-
-.btn__cancel {
-  background-color: rgb(221, 32, 32);
-}
 .delete-all {
   background-color: transparent;
   background-repeat: no-repeat;
@@ -564,24 +557,6 @@ a:visited {
 
 .form__btn {
   display: none;
-}
-
-.copyright {
-  margin-top: auto;
-  font-size: 1.3rem;
-  text-align: center;
-  color: var(--color-light--1);
-}
-
-.twitter-link:link,
-.twitter-link:visited {
-  color: var(--color-light--1);
-  transition: all 0.2s;
-}
-
-.twitter-link:hover,
-.twitter-link:active {
-  color: var(--color-light--2);
 }
 
 /* MAP */
@@ -618,21 +593,17 @@ a:visited {
   }
 
   .sidebar {
-    min-height: 50%;
+    min-height: 45%;
     min-width: 100%;
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 0em;
-    border-top-right-radius: 1em;
+    border-radius: 0;
   }
 
   .workouts {
     height: 50vh;
   }
   #map {
-    min-height: 25%;
+    min-height: 30%;
     border-radius: 0;
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
   }
 
   .leaflet-popup .leaflet-popup-content-wrapper {
@@ -648,12 +619,100 @@ a:visited {
 }
 @media only screen and (max-width: 588px) {
   body {
-    padding: 0.5em;
+    padding: 0em;
+  }
+  .modal {
+    min-width: 23em;
+    padding: 2em 1.5em;
+    text-align: center;
+  }
+  .btn--close-modal {
+    font-size: 3rem;
+  }
+  .modal h3 {
+    font-size: 1.65rem;
+    font-weight: 600;
+  }
+  .modal h4 {
+    font-size: 1.25rem;
   }
   .sidebar {
     padding: 3em 1.5em;
   }
   .workout {
     margin-bottom: 1em;
+  }
+  .logo {
+    width: 7em;
+    height: 4rem;
+  }
+  .handle-workout--sort {
+    width: 45%;
+  }
+  .handle-workout--type {
+    width: 26%;
+  }
+  .handle-workout--sort .form__label,
+  .handle-workout--type .form__label,
+  .handle-workout--sort__input,
+  .handle-workout--type__input {
+    font-size: 1.25rem;
+  }
+  .delete-all {
+    font-size: 1.5rem;
+  }
+  .form {
+    font-size: 1rem;
+  }
+  .form__title {
+    display: flex;
+    font-size: 1.5rem;
+    margin-left: 32%;
+  }
+  .form .form__label,
+  .form .form__input,
+  .form .form__input--value {
+    font-size: 1.2rem;
+  }
+  .form .form__btn-close {
+    font-size: 2rem;
+  }
+  .workout__icon,
+  .workout__value,
+  .workout__unit {
+    font-size: 1.2rem;
+  }
+  .workout__title {
+    font-size: 1.5rem;
+  }
+  .workout__unit {
+    font-weight: 600;
+  }
+  .workout {
+    padding: 1em 1em;
+  }
+  .workout--cycling .workout__details .workout__value {
+    margin-left: 0.1rem;
+  }
+  .workouts::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.5em;
+  }
+
+  .workouts::-webkit-scrollbar-track {
+    border-radius: 5vw;
+    scroll-behavior: smooth;
+  }
+
+  .workouts::-webkit-scrollbar-thumb {
+    background: #00c46a;
+    border: 1.25em solid #00c46a;
+    border-radius: 10vw;
+  }
+  .edit-icon {
+    margin: 0;
+    font-size: 1.5rem;
+    height: 2.5rem;
+    padding: 0.3em;
   }
 }
