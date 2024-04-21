@@ -69,9 +69,7 @@ class Cycling extends Workout {
     }
 }
 
-// const run1 = new Running([39, -12], 5.2, 24, 178);
-// const cycling1 = new Cycling([39, -12], 27, 95, 523);
-// console.log(run1, cycling1);
+
 
 ///////////////////////////////////////
 // APPLICATION ARCHITECTURE
@@ -86,6 +84,7 @@ const inputs = document.querySelectorAll('input');
 const formCloseButton = document.querySelector('.form__btn-close')
 const containerWorkouts = document.querySelector('.workouts');
 const workoutList = document.querySelector('.workout--list');
+const noWorkout = document.querySelector('.workout__error');
 const inputType = document.querySelector('.form__input--type');
 const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
@@ -96,6 +95,9 @@ const errorContent = document.querySelector('.error-content');
 const closeModal = document.querySelector('.btn--close-modal');
 const overlay = document.querySelector('.overlay');
 const tempImg = document.querySelector(".tempImg");
+const map = document.getElementById('map')
+
+
 
 // to get the bundeled image reference after build to show "more-option" icon 
 const src = tempImg.src;
@@ -122,6 +124,16 @@ let reRender = false;
 let formIsOpen = false;
 
 ///////////////////////////
+
+const spinnerMarkup = `
+<div class="spinner">
+<img src="../materials/spinner.png" alt="">
+</div>`
+
+const noWorkoutContent = `
+<p class="workout-error-message">
+No Workout Found 🏃‍♂️. Try To Add a Workout By Clicking On The Map     
+</p>`
 
 const locationErrorContent = `
 <h3>🚫LOCATION ACCESS DENIED🚫</h3>
@@ -160,10 +172,12 @@ class App {
     #tempID;
     constructor() {
         // Get user's position
+        // this._workoutErrorRenderer() 
         this._getPosition();
         // Get data from local storage
         this._getLocalStorage();
 
+        this._workoutErrorRenderer();
         // Attach event handlers
         formCloseButton.addEventListener('click',this._closeForm)
         form.addEventListener('submit', this._newWorkout.bind(this));
@@ -186,36 +200,25 @@ class App {
             );
     }
     _loadMap(position) {
+        map.insertAdjacentHTML('afterbegin',spinnerMarkup);
+        const spinner = document.querySelector('.spinner'); 
         const { latitude } = position.coords;
         const { longitude } = position.coords;
-        // console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
-
         const coords = [latitude, longitude];
-
+    
         this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
-            , {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(this.#map);
-
-        // Handling clicks on map
-        // this.#map.on('click', this._showForm.bind(this));
-        this.#map.on('click', (e) => {
-            if (!formIsOpen) {
-                return this._showForm(e);
-            } else {
-                this._closeForm();
-                return this._openModal('form');
-            }
+    
+        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(this.#map);
+    
+        // Listen for tile load events
+        tileLayer.on('load', () => {
+            // Hide spinner once tiles have loaded
+            spinner.remove();
         });
-        
-
-        this.#workouts.forEach(work => {
-            this._createWorkoutMarker(work);
-        })
     }
+    
 
     _openModal(modalV) {
         modalHTML = locationErrorContent;
@@ -300,11 +303,10 @@ class App {
     {
         formIsOpen = false;
         reRender = false ;
-        console.log('hi')
         form.style.display = 'none';
         formTitle.innerHTML="";
         form.classList.add('hidden');
-        if(selectedWorkout) {selectedWorkout.classList.remove('hidden'); console.log("workout is hidden")}
+        if(selectedWorkout) {selectedWorkout.classList.remove('hidden');}
         setTimeout(() => (form.style.display = 'grid'), 1000);
     }
     _hideForm() {
@@ -382,6 +384,9 @@ class App {
         
         // Add new object to workout array
         this.#workouts.push(workout);
+
+
+        this._workoutErrorRenderer();
         // Hide form + clear input fields
         this._hideForm();
         
@@ -414,6 +419,19 @@ class App {
         this.#workoutMarker.forEach(marker => marker.addTo(this.#map).openPopup());
     }
     
+    _workoutErrorRenderer()
+    {
+        if(this.#workouts.length == 0)
+        {
+            noWorkout.insertAdjacentHTML('afterbegin',noWorkoutContent)
+            noWorkout.classList.remove('hidden');
+        }
+        else{
+            noWorkout.classList.add('hidden');
+            noWorkout.innerHTML = "";
+        }
+    }
+
     _workoutMarkup(workout)
     {
         html = `
@@ -531,7 +549,6 @@ class App {
     _deleteWorkout(e)
     {
         if(formIsOpen) return this._openModal('form')
-
         this._selectWorkout(e);
         selectedWorkout.remove();
         selectedID = selectedWorkout.dataset.id;
@@ -545,7 +562,7 @@ class App {
                     this._setLocalStorage();
                 }
             })
-       console.log(`workout deleted `)
+        this._workoutErrorRenderer();
     }
     _moveToPopup(e) {
         // BUGFIX: When we click on a workout before the map has loaded, we get an error. But there is an easy fix:
@@ -577,8 +594,7 @@ class App {
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem('workouts'));
 
-        if (!data) return;
-
+        if (!data || data == "") return ;
         this.#workouts = data;
         sortW(this.#workouts, 'asc', 'date');
         this.#workouts.forEach(work => {
@@ -599,4 +615,5 @@ class App {
 }
 
 const app = new App();
+
 console.log()

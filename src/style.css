@@ -85,6 +85,7 @@ body {
   left: 50%;
   color: #e8e8e9;
   font-size: 1.75rem;
+  text-align: center;
   transform: translate(-50%, -50%);
   max-width: 70rem;
   background-color: #3c3f41;
@@ -103,10 +104,6 @@ body {
   to {
     opacity: 1;
   }
-}
-
-.modal h3 {
-  text-align: center;
 }
 
 .btn--close-modal {
@@ -167,6 +164,9 @@ a:visited {
   flex: 1;
   height: 100%;
   background-color: var(--color-light--1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
@@ -455,8 +455,9 @@ a:visited {
 .form__title {
   font-size: 1.9rem;
   font-weight: bold;
-  margin-left: 8em;
+  margin-left: 7.5em;
 }
+
 .form.hidden {
   transform: translateY(-30rem);
   height: 0;
@@ -583,26 +584,82 @@ a:visited {
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+.workout__error {
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+}
+.spinner {
+  display: block;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s infinite linear;
+}
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .sidebar {
+    width: 35%;
+  }
+  .form .form__title {
+    margin-left: 6.2em;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  body {
+    padding: 1em;
+  }
+  .sidebar {
+    max-width: 60%;
+    padding: 2em 1.5em;
+  }
+  .modal {
+    width: 35em;
+  }
+}
 @media only screen and (max-width: 748px) {
   /* Styles to apply when the screen width is 768 pixels or less */
   body {
     flex-direction: column;
     padding: 1.5em;
   }
-
+  .modal {
+    width: 30em;
+    padding: 3em 1.5em;
+  }
   .sidebar {
     min-height: 45%;
     min-width: 100%;
     border-radius: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
   }
-
+  .workout__error {
+    font-size: 1.5rem;
+  }
+  .form .form__title {
+    margin-left: 9.5em;
+  }
   .workouts {
     height: 50vh;
   }
   #map {
     min-height: 30%;
     border-radius: 0;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
   }
 
   .leaflet-popup .leaflet-popup-content-wrapper {
@@ -621,9 +678,8 @@ a:visited {
     padding: 0em;
   }
   .modal {
-    min-width: 23em;
+    width: 20em;
     padding: 2em 1.5em;
-    text-align: center;
   }
   .btn--close-modal {
     font-size: 3rem;
@@ -634,6 +690,14 @@ a:visited {
   }
   .modal h4 {
     font-size: 1.25rem;
+  }
+  .sidebar,
+  #map {
+    border-radius: 0;
+  }
+  .spinner {
+    width: 60px;
+    height: 60px;
   }
   .sidebar {
     padding: 3em 1.5em;
@@ -663,10 +727,10 @@ a:visited {
   .form {
     font-size: 1rem;
   }
-  .form__title {
+  .form .form__title {
     display: flex;
     font-size: 1.5rem;
-    margin-left: 32%;
+    margin-left: 8.2em;
   }
   .form .form__label,
   .form .form__input,
@@ -719,7 +783,10 @@ a:visited {
     font-size: 1rem;
   }
   .dropdown-menu {
-    padding: 0.4em 0.1em;
+    padding: 0.4em 0.25em;
     border-radius: 0.8em;
+  }
+  .dropdown-menu li a:hover {
+    border-radius: 1em;
   }
 }
