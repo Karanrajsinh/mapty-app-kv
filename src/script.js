@@ -200,12 +200,12 @@ class App {
             );
     }
     _loadMap(position) {
-        map.insertAdjacentHTML('afterbegin',spinnerMarkup);
-        const spinner = document.querySelector('.spinner'); 
         const { latitude } = position.coords;
         const { longitude } = position.coords;
         const coords = [latitude, longitude];
-    
+        
+        map.insertAdjacentHTML('afterbegin',spinnerMarkup);
+        const spinner = document.querySelector('.spinner'); 
         this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     
         const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -217,6 +217,20 @@ class App {
             // Hide spinner once tiles have loaded
             spinner.remove();
         });
+
+        this.#map.on('click', (e) => {
+            if (!formIsOpen) {
+                return this._showForm(e);
+            } else {
+                this._closeForm();
+                return this._openModal('form');
+            }
+        });
+        
+
+        this.#workouts.forEach(work => {
+            this._createWorkoutMarker(work);
+        })
     }
     
 
@@ -296,6 +310,7 @@ class App {
             formHeader.style.borderBottom ="2px solid red"
         }
         form.classList.remove('hidden');
+        noWorkout.classList.add('hidden');
         inputDistance.focus();
     }
 
@@ -306,13 +321,13 @@ class App {
         form.style.display = 'none';
         formTitle.innerHTML="";
         form.classList.add('hidden');
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
+            '';
         if(selectedWorkout) {selectedWorkout.classList.remove('hidden');}
         setTimeout(() => (form.style.display = 'grid'), 1000);
     }
     _hideForm() {
         // Empty inputs
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
-            '';
         this._closeForm();
         
     }
