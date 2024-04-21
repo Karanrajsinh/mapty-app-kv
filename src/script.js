@@ -125,7 +125,6 @@ let selectedID;
 let html;
 let reRender = false;
 let formIsOpen = false;
-
 ///////////////////////////
 
 const spinnerMarkup = `
@@ -175,7 +174,8 @@ class App {
     #tempID;
     constructor() {
         // Get user's position
-        // this._workoutErrorRenderer() 
+        this._workoutErrorRenderer = this._workoutErrorRenderer.bind(this);
+        this._sortWorkoutType = this._sortWorkoutType.bind(this);
         this._getPosition();
         // Get data from local storage
         this._getLocalStorage();
@@ -283,17 +283,21 @@ class App {
     _sortWorkoutType() {
         const cycling = document.querySelectorAll('.workout--cycling');
         const running = document.querySelectorAll('.workout--running');
+        const all = [...running,...cycling];
         const sort = typeSort.value;
 
         if (sort === "running") {
+            this._workoutErrorRenderer(running);
             cycling.forEach(wor => wor.classList.add('hidden'))
             running.forEach(wor => wor.classList.remove('hidden'))
         }
         if (sort === "cycling") {
+            this._workoutErrorRenderer(cycling);
             running.forEach(wor => wor.classList.add('hidden'))
             cycling.forEach(wor => wor.classList.remove('hidden'))
         }
         if (sort === "all") {
+            this._workoutErrorRenderer(all);
             cycling.forEach(wor => wor.classList.remove('hidden'));
             running.forEach(wor => wor.classList.remove('hidden'));
         }
@@ -437,10 +441,13 @@ class App {
         this.#workoutMarker.forEach(marker => marker.addTo(this.#map).openPopup());
     }
     
-    _workoutErrorRenderer()
+    _workoutErrorRenderer(arr)
     {
-        if(this.#workouts.length == 0)
+        let temp ;
+        if (arr && arr.length >= 0)  temp = [...arr];
+        if(this.#workouts.length == 0 || temp?.length === 0 )
         {
+            console.log('h')
             noWorkout.insertAdjacentHTML('afterbegin',noWorkoutContent)
             noWorkout.classList.remove('hidden');
         }
@@ -448,6 +455,8 @@ class App {
             noWorkout.classList.add('hidden');
             noWorkout.innerHTML = "";
         }
+
+        return this;
     }
 
     _workoutMarkup(workout)

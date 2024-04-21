@@ -792,6 +792,6 @@ a:visited {
 }
 @media only screen and (max-width: 480px) {
   .form .form__title {
-    margin-left: 5.5em;
+    margin-left: 6.5em;
   }
 }
