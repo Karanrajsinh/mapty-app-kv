@@ -336,7 +336,8 @@ class App {
             '';
         if(selectedWorkout) {selectedWorkout.classList.remove('hidden');}
         setTimeout(() => (form.style.display = 'grid'), 1000);
-        noWorkout.classList.remove('hidden');
+        noWorkout.innerHTML = '';
+        this._workoutErrorRenderer();
     }
     _hideForm() {
         // Empty inputs
@@ -454,10 +455,12 @@ class App {
         {
             noWorkout.insertAdjacentHTML('afterbegin',noWorkoutContent)
             noWorkout.classList.remove('hidden');
+            console.log('h')
         }
         else{
             noWorkout.classList.add('hidden');
             noWorkout.innerHTML = "";
+            console.log('y')
         }
 
         return this;
