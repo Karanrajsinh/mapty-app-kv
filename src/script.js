@@ -304,13 +304,19 @@ _loadMap(position) {
         );
         
         // Define the tile layer for the dark view
-        const darkLayer = L.tileLayer(
-            'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        const googleLayer = L.tileLayer(
+            'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+,
             {
-                attribution: '© Stadia Maps'
+                attribution: '© Google Maps'
             }
         );
-        
+        const worldStreetLayer = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+            {
+                attribution: '© Esri World Street Map'
+            }
+            )
         // Construct the baseTree with all tile layers
         const baseTree = [
             {
@@ -318,7 +324,8 @@ _loadMap(position) {
                 children: [
                     { label: 'Default', layer: firstLayer },
                     { label: 'Satellite', layer: satelliteLayer },
-                    { label: 'Dark', layer: darkLayer }
+                    { label: 'Google Map', layer: googleLayer },
+                    { label: 'Street', layer: worldStreetLayer }
                 ]
             }
         ];
