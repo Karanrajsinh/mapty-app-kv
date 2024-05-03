@@ -593,9 +593,11 @@ a:visited {
   font-size: 2rem;
 }
 .spinner {
-  display: block;
-  width: 100px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
   animation: spin 1s infinite linear;
 }
 
@@ -792,6 +794,10 @@ a:visited {
 }
 @media only screen and (max-width: 480px) {
   .form .form__title {
-    margin-left: 5.4em;
+    margin-left: 6em;
+  }
+  .spinner img {
+    width: 50px;
+    height: 50px;
   }
 }

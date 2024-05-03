@@ -1,0 +1,62 @@
+/* Adjusting the toggle button */
+.leaflet-control-layers-toggle.leaflet-layerstree-named-toggle {
+  margin: 2px 5px; /* Adjust margin */
+  width: auto; /* Set width to auto */
+  height: auto; /* Set height to auto */
+  background-image: none; /* Remove background image */
+}
+
+/* Styling the node */
+.leaflet-layerstree-node {
+  background-color: #2d3439be;
+  margin-top: 10px;
+  padding: 10px;
+  border: 0.5px solid #a3a1a1b2;
+  border-radius: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.541);
+}
+
+/* Adjusting input in header */
+.leaflet-layerstree-header input {
+  margin-right: 10px; /* Adjust left margin */
+}
+
+/* Styling the pointer for header */
+.leaflet-layerstree-header-pointer {
+  cursor: pointer; /* Add cursor pointer */
+}
+
+/* Styling the label */
+.leaflet-layerstree-header label {
+  display: inline-block; /* Set display to inline-block */
+  cursor: pointer; /* Add cursor pointer */
+  color: white; /* Text color */
+}
+
+/* Styling the children */
+.leaflet-layerstree-children {
+  padding: 0px;
+  margin: 0px; /* Adjust padding-left */
+}
+
+/* Styling the expand-collapse */
+.leaflet-layerstree-expand-collapse {
+  cursor: pointer; /* Add cursor pointer */
+  color: #666; /* Text color */
+}
+
+/* Styling the header */
+.leaflet-layerstree-header {
+  /* Add styles as needed */
+  color: white;
+}
+
+/* Hiding the node */
+.leaflet-layerstree-hide {
+  display: none; /* Hide the node */
+}
+
+/* Never show the node */
+.leaflet-layerstree-nevershow {
+  display: none; /* Hide the node */
+}

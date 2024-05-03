@@ -203,40 +203,153 @@ class App {
                 this._loadMap.bind(this), this._openModal
             );
     }
-    _loadMap(position) {
-        const { latitude } = position.coords;
-        const { longitude } = position.coords;
-        const coords = [latitude, longitude];
+//     _loadMap(position) {
+//         const { latitude } = position.coords;
+//         const { longitude } = position.coords;
+//         const coords = [latitude, longitude];
         
-        map.insertAdjacentHTML('afterbegin',spinnerMarkup);
-        const spinner = document.querySelector('.spinner'); 
-        this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
+//         map.insertAdjacentHTML('afterbegin',spinnerMarkup);
+//         const spinner = document.querySelector('.spinner'); 
+//         this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     
-        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(this.#map);
+//         // Define the tile layer for the first layer
+// const firstLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+// });
+
+// // Add the first layer to the map
+// firstLayer.addTo(this.#map);
+
+// // Listen for tile load events
+// firstLayer.on('load', () => {
+//     // Hide spinner once tiles have loaded
+//     spinner.remove();
+// });
+
+// // Define the tile layer for the satellite view
+// const satelliteLayer = L.tileLayer(
+//     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+//     {
+//         attribution: '© Stadia Maps'
+//     }
+// );
+
+// // Define the tile layer for the dark view
+// const darkLayer = L.tileLayer(
+//     'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+//     {
+//         attribution: '© Stadia Maps'
+//     }
+// );
+
+// // Construct the baseTree with all tile layers
+// const baseTree = [
+//     {
+//         label: 'Select Map',
+//         children: [
+//             { label: 'Default', layer: firstLayer },
+//             { label: 'Satellite', layer: satelliteLayer },
+//             { label: 'Dark', layer: darkLayer }
+//         ]
+//     }
+// ];
+
+// // Add a layer control with the baseTree to the map
+// L.control.layers.tree(baseTree).addTo(this.#map);
+
     
-        // Listen for tile load events
-        tileLayer.on('load', () => {
+
+//         this.#map.on('click', (e) => {
+//             if (!formIsOpen) {
+//                 return this._showForm(e);
+//             } else {
+//                 this._closeForm();
+//                 return this._openModal('form');
+//             }
+//         });
+//         this.#workouts.forEach(work => {
+//             this._createWorkoutMarker(work);
+//         })
+//     }
+    
+
+_loadMap(position) {
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+    const coords = [latitude, longitude];
+
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
+    
+    // Define the tile layer for the first layer
+    const firstLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    });
+    map.insertAdjacentHTML('afterbegin', spinnerMarkup);
+    const spinner = document.querySelector('.spinner');
+    // Add the first layer to the map
+    firstLayer.addTo(this.#map);
+    
+    // Listen for tile load events
+    firstLayer.on('load', () => {
             // Hide spinner once tiles have loaded
             spinner.remove();
         });
-
-        this.#map.on('click', (e) => {
-            if (!formIsOpen) {
-                return this._showForm(e);
-            } else {
-                this._closeForm();
-                return this._openModal('form');
-            }
-        });
         
+        // Define the tile layer for the satellite view
+        const satelliteLayer = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            {
+                attribution: '© Stadia Maps'
+            }
+        );
+        
+        // Define the tile layer for the dark view
+        const darkLayer = L.tileLayer(
+            'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+            {
+                attribution: '© Stadia Maps'
+            }
+        );
+        
+        // Construct the baseTree with all tile layers
+        const baseTree = [
+            {
+                label: 'Select View',
+                children: [
+                    { label: 'Default', layer: firstLayer },
+                    { label: 'Satellite', layer: satelliteLayer },
+                    { label: 'Dark', layer: darkLayer }
+                ]
+            }
+        ];
+        
+    // Add a layer control with the baseTree to the map
+    L.control.layers.tree(baseTree).addTo(this.#map);
 
-        this.#workouts.forEach(work => {
-            this._createWorkoutMarker(work);
-        })
-    }
-    
+    // Event listener for base layer change
+    this.#map.on('baselayerchange', (e) => {
+        map.insertAdjacentHTML('afterbegin', spinnerMarkup);
+        
+        e.layer.once('load', () => {
+            const spinner1 = document.querySelector('.spinner');
+            spinner1.remove();
+        });
+    });
+
+    this.#map.on('click', (e) => {
+        if (!formIsOpen) {
+            return this._showForm(e);
+        } else {
+            this._closeForm();
+            return this._openModal('form');
+        }
+    });
+    this.#workouts.forEach(work => {
+        this._createWorkoutMarker(work);
+    })
+}
+
+
 
     _openModal(modalV) {
         modalHTML = locationErrorContent;
@@ -454,15 +567,12 @@ class App {
         if(this.#workouts.length == 0 || temp?.length === 0 )
         {
             noWorkout.insertAdjacentHTML('afterbegin',noWorkoutContent)
-            noWorkout.classList.remove('hidden');
-            console.log('h')
+            noWorkout.classList.remove('hidden');   
         }
         else{
             noWorkout.classList.add('hidden');
             noWorkout.innerHTML = "";
-            console.log('y')
-        }
-
+            }
         return this;
     }
 
