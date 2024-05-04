@@ -336,8 +336,7 @@ _loadMap(position) {
     // Event listener for base layer change
     this.#map.on('baselayerchange', (e) => {
         const spinner1 = document.querySelector('.spinner');
-       if(!spinner1) map.insertAdjacentHTML('afterbegin', spinnerMarkup);
-        
+        if(!spinner1) map.insertAdjacentHTML('afterbegin',spinnerMarkup);
         e.layer.once('load', () => {
             spinner1?.remove();
         });
